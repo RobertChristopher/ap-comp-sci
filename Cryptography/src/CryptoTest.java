@@ -18,28 +18,43 @@ public class CryptoTest {
 	
 	@Test
 	public void testToMorseCode() {
-		System.out.println(Crypto.toMorseCode("Hey"));
+		assertEquals(".... . -.-- ", Crypto.toMorseCode("Hey"));
 	}
 
 	@Test
 	public void testFromMorseCode() {
-		System.out.println(Crypto.reverse("--. . -..- "));
+		assertEquals("GEX", Crypto.reverse("--. . -..- "));
 	}
 	
 	@Test
 	public void testToNumeric() {
-		System.out.println(Crypto.toNumeric("hey"));
+		assertEquals("104101121", Crypto.toNumeric("hey"));
 	}
 	
 	@Test
 	public void testCaesarShift() {
-		System.out.println(Crypto.caesarShift("hey", 1));
+		assertEquals("ifz", Crypto.caesarShift("hey", 1));
 	}
 	
 	@Test
 	public void testSingleFrequencyCount() {
 		char target = 'h';
 		
-		System.out.println(Crypto.singleFrequencyCount("hey", target));
+		assertEquals(1, Crypto.singleFrequencyCount("hey", target));
+	}
+	
+	@Test
+	public void testfullFrequencyCount()
+	{
+		assertEquals(1, Crypto.fullFrequencyCount("a")[0]);
+	}
+	
+	@Test
+	public void testSubstitution()
+	{	
+		String[] morse =  { ".-", "-...", "-.-.", "-..", ".", "..-.", "--.",
+				 "....", "..", ".---", "-.-", ".-..", "--", "-.", "---", ".--.",
+				 "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--.."};
+		assertEquals(Crypto.substitution("yo", morse), "-.-- --- ");
 	}
 }

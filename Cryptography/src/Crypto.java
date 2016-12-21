@@ -3,12 +3,11 @@ import java.util.Arrays;
 
 public class Crypto {
 	
-	private static final String[] MORSE = {
-			".-", "-...", "-.-", "-..", ".", "..-", ",", "--.",
-			"...", "..", ".--", "-.-", ".-..", "--", "-.", "---", ".--.",
-			"--.-", ".-.", "...", "-", "..-", "...-", ",", "-..-", "-.--", ",", "--.."
-	};
-	
+	private static final String[] MORSE =  {
+		".-", "-...", "-.-.", "-..", ".", "..-.", "--.",
+		"....", "..", ".---", "-.-", ".-..", "--", "-.", "---", ".--.",
+		"--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--.."};
+
 	private static final int SINGLE_FREQUENCY_INCREMENT = 1;
 	private static final int ALPHABET_START_INDEX = 65;
 	private static final int ALPHABET_STOP_INDEX = 90;
@@ -93,7 +92,8 @@ public class Crypto {
 	public static int singleFrequencyCount(String sequence, char target) {
 		int targetCount = 0;
 		
-		for(int i = 0; i < sequence.length(); i++) {
+		for(int i = 0; i < sequence.length(); i++)
+		{
 			char currentChar = sequence.charAt(i);
 			if(currentChar == target) {
 				targetCount += SINGLE_FREQUENCY_INCREMENT;
@@ -105,26 +105,43 @@ public class Crypto {
 	}
 	
 	public static int[] fullFrequencyCount(String sequence) {
-		int[] frequencyValues = {};
+		int[] frequencyValues = new int[Crypto.MORSE.length];
+		sequence = sequence.toUpperCase();
+		String[] tokens = sequence.split(" ");
 		
-		for(int i = ALPHABET_START_INDEX; i < ALPHABET_STOP_INDEX; i++) {
-			frequencyValues[i] = 
+		for(int i = 0; i < Crypto.MORSE.length; i++)
+		{	
+			int occurences = 0;
+			String code = Crypto.MORSE[i];
+			for(String token: tokens)
+			{	
+				String reversed = Crypto.reverse(code);
+				if(token.compareTo(reversed) == 0)
+				{	
+					occurences++;
+				}
+			}
+			
+			frequencyValues[i] = occurences;
 		}
-		return null;
+
+		return frequencyValues;
 	}
 	
-//	public static String reverse(String sequence) {
-//		String reversed_sequence = "";
-//		
-//		for(int i = 0; i < sequence.length(); i++) {
-//			reversed_sequence += sequence.charAt(i);
-//		}
-//		
-//		return reversed_sequence;
-//	}
-	
-	
-	
-	
+	public static String substitution(String sequence, String[] alphabet) {
+		sequence = shorten(sequence);
+		String finalAnswer = "";
+		
+		for(int i = 0; i < sequence.length(); i++) {
+			char currentChar = sequence.charAt(i);
+			int morseLetter = sequence.charAt(i);
+			morseLetter -= 'A';
+					
+			finalAnswer += alphabet[morseLetter];
+			finalAnswer += " ";
+		}
+		
+		return finalAnswer;
+	}
 		
 }
